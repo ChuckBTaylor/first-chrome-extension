@@ -6,8 +6,18 @@
   "background": {
     "service_worker": "background.js"
   },
-  "options_page":"options.html",
-  "permissions": ["storage", "activeTab", "scripting", "tabs"],
+  "options_page": "options.html",
+  "permissions": [
+    "storage",
+    "activeTab",
+    "scripting",
+    "tabs",
+    "clipboardWrite",
+    "clipboardRead",
+    "debugger",
+    "downloads",
+    "search"
+  ],
   "action": {
     "default_popup": "popup.html",
     "default_icon": {

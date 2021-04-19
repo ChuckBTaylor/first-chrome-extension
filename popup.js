@@ -6,14 +6,21 @@ chrome.storage.sync.get("color", ({ color }) => {
   changeColor.style.backgroundColor = color;
 });
 
+console.log("button: ", changeColor);
+console.log("paragraph: ", pageText);
+
 changeColor.addEventListener("click", async () => {
   let [tab] = await chrome.tabs.query({ active: true, currentWindow: true });
 
   chrome.scripting.executeScript({
     target: { tabId: tab.id },
     function: getLargestImageSource,
+  }, (source) => {
+    let pageImage = document.getElementById("largeImage");
+    let pageText = document.getElementById("sourceText");
+    pageImage.src = source[0].result;
+    pageText.innerText = source[0].result;
   });
-
 });
 
 function getLargestImageSource() {
@@ -29,10 +36,11 @@ function getLargestImageSource() {
       image = images[i];
     }
   }
-  console.log(chrome);
-  if (!!image) {
-    chrome.tabs.create({url: image.src});
+
+  if (!image) {
+    return "";
   }
+  return image.src;
 }
 
 // The body of this function will be executed as a content script inside the
